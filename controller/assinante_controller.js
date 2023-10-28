@@ -12,7 +12,7 @@ assinante.all = async function (requisicao, response){
     }
 }
 
-aluno.create = async function (requisicao, response) {
+assinante.create = async function (requisicao, response){
     try{
         let assinante = requisicao.body;
         let sql = "INSERT INTO assinante (cpf_assinante, nome_assinante, email_assinante) VALUES (?,?,?)";
@@ -20,10 +20,40 @@ aluno.create = async function (requisicao, response) {
         let resultado = await con.query(sql, values);
         response.send({
             status:"Dado inserido com sucesso!",
-            result: result
+            result: resultado
         });
     } catch (e) {
         console.log("Erro, operação não realizada.",e);
+    }
+}
+
+assinante.update = async function (requisicao, response){
+    try{
+        let id_ass = requisicao.params.cpf_assinante;
+        let assinante = requisicao.body;
+        let sql = "UPDATE assinante SET cpf_assinante = ?, nome_assinante = ?, email_assinante = ? WHERE cpf_assinante = ?;";
+        let values = [assinante.cpf_assinante, assinante.nome_assinante, assinante.email_assinante, id_ass];
+        let resultado = await con.query(sql, values);
+        response.send({
+            status:"Atualização do assinante " +assinante.nome+ "realizada com sucesso.",
+            result: resultado
+        });
+    } catch (e) {
+        console.log("Erro, operação não realizada.",e);
+    }
+}
+
+assinante.delete = async function (requisicao, response){
+    try {
+        let id_ass = requisicao.params.cpf_assinante;
+        let sql = "DELETE FROM assinante WHERE cpf_assinante = ?;";
+        let resultado = await con.query(sql, [id_ass]);
+        response.send({
+            status:"Exclusão do assinante de CPF " +assinante.cpf_assinante+ "realizada com sucesso.",
+            result: resultado
+        });
+    } catch (e) {
+        console.log("Erro, opração não realizada.",e);
     }
 }
 
