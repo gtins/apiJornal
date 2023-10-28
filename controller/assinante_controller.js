@@ -1,12 +1,12 @@
-import connect from "../config/connection";
+import connect from "../config/connection.js";
 
 let assinante = {}; //objeto assinante
 const con = await connect(); // conexão irá esperar o método connect (importamos ele do arquivo connection), ou seja, irá inicializar quando a conexão estiver feita.
 
 assinante.all = async function (requisicao, response){
     try{
-        let assinantes = await con.query("SELECT * FROM assinante");
-        response.send(assinante);
+        let assinantes = await con.query("SELECT * FROM assinante;");
+        response.send(assinantes);
     } catch (e) {
         console.log("Erro, operação não realizada." ,e);
     }
@@ -15,7 +15,7 @@ assinante.all = async function (requisicao, response){
 assinante.create = async function (requisicao, response){
     try{
         let assinante = requisicao.body;
-        let sql = "INSERT INTO assinante (cpf_assinante, nome_assinante, email_assinante) VALUES (?,?,?)";
+        let sql = "INSERT INTO assinante (cpf_assinante, nome_assinante, email_assinante) VALUES (?,?,?);";
         let values = [assinante.cpf_assinante, assinante.nome_assinante, assinante.email_assinante];
         let resultado = await con.query(sql, values);
         response.send({
