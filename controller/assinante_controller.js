@@ -5,8 +5,11 @@ const con = await connect(); // conexão irá esperar o método connect (importa
 
 assinante.all = async function (requisicao, response){
     try{
-        let assinantes = await con.query("SELECT * FROM assinante;");
-        response.send(assinantes);
+        let nome_assinante = requisicao.query.nome_assinante;
+        let sql = "SELECT * FROM assinante WHERE nome_assinante LIKE ?;";
+        let values = ['%' + nome_assinante + '%'];
+        let resultado = await con.query(sql, values);
+        response.send(resultado);
     } catch (e) {
         console.log("Erro, operação não realizada." ,e);
     }
@@ -31,11 +34,11 @@ assinante.update = async function (requisicao, response){
     try{
         let id_ass = requisicao.params.cpf_assinante;
         let assinante = requisicao.body;
-        let sql = "UPDATE assinante SET cpf_assinante = ?, nome_assinante = ?, email_assinante = ? WHERE cpf_assinante = ?;";
-        let values = [assinante.cpf_assinante, assinante.nome_assinante, assinante.email_assinante, id_ass];
+        let sql = "UPDATE assinante SET nome_assinante = ?, email_assinante = ? WHERE cpf_assinante = ?;";
+        let values = [assinante.nome_assinante, assinante.email_assinante, id_ass];
         let resultado = await con.query(sql, values);
         response.send({
-            status:"Atualização do assinante " +assinante.nome+ "realizada com sucesso.",
+            status:"Atualização do assinante " +assinante.nome_assinante+ " realizada com sucesso.",
             result: resultado
         });
     } catch (e) {
@@ -49,7 +52,7 @@ assinante.delete = async function (requisicao, response){
         let sql = "DELETE FROM assinante WHERE cpf_assinante = ?;";
         let resultado = await con.query(sql, [id_ass]);
         response.send({
-            status:"Exclusão do assinante de CPF " +assinante.cpf_assinante+ "realizada com sucesso.",
+            status:"Exclusão do assinante de CPF " +id_ass+ " realizada com sucesso.",
             result: resultado
         });
     } catch (e) {

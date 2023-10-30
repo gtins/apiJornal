@@ -1,14 +1,26 @@
-GET http://localhost:3000/assinante HTTP/1.1
-Content-Type: application/json
-
-###
 POST http://localhost:3000/assinante HTTP/1.1
 Content-Type: application/json
 
 {
     "cpf_assinante": 12345678901,
     "nome_assinante": "Fulano de Tal",
-    "email_assinante": "Atlântida"
+    "email_assinante": "fulano@email.com"
 }
+
+###
+GET http://localhost:3000/assinante?nome_assinante=Fulano HTTP/1.1
+Content-Type: application/json
+
+###
+PUT http://localhost:3000/assinante/12345678901 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome_assinante": "Ciclana",
+    "email_assinante": "ciclana@email.com"
+}
+###
+DELETE http://localhost:3000/assinante/12345678901 HTTP/1.1
+Content-Type: application/json
 
 ###
