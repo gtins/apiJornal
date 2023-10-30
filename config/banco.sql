@@ -1,6 +1,6 @@
 mysql -u root
 
-create database jornalBanco;
+create database bancoJornal;
 
 use jornal;
 
