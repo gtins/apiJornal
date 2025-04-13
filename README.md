@@ -36,7 +36,6 @@ cd apiJornal
 3. Instale as dependências do projeto:
 
 npm install
-Configure a conexão com o MongoDB (local ou Atlas). Não se esqueça de configurar o arquivo .env com a variável MONGODB_URI.
 
 5. Inicie o servidor:
 
